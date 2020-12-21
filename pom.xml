@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <modules>
+        <module>my-sofa-demo-biz</module>
+        <module>my-sofa-demo-plugin</module>
+        <module>my-sofa-demo-facade</module>
+        <module>my-sofa-demo-biz-service</module>
+        <module>my-runtime-sofa-boot-plugin</module>
+    </modules>
+
+    <parent>
+        <artifactId>sofaboot-dependencies</artifactId>
+        <groupId>com.alipay.sofa</groupId>
+        <version>3.4.6</version>
+    </parent>
+
+    <groupId>pres.lnk</groupId>
+    <artifactId>my-sofa-demo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

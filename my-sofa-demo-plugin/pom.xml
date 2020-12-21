@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>my-sofa-demo</artifactId>
+        <groupId>pres.lnk</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>my-sofa-demo-plugin</artifactId>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>pres.lnk</groupId>
+            <artifactId>my-sofa-demo-facade</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- 插件服务环境的依赖包 -->
+        <dependency>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>runtime-sofa-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 类隔离打包方式 -->
+            <plugin>
+                <groupId>com.alipay.sofa</groupId>
+                <artifactId>sofa-ark-plugin-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <goals>
+                            <goal>ark-plugin</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>ark-plugin</classifier>
+                            <activator>pres.lnk.sofa.demo.plugin.Starter</activator>
+                            <!--
+                             类隔离关键
+                             设置该包的类不使用自身的类加载器加载接口类
+                             如果不设置的话，插件全使用自身类加载器加载接口类，接口类也会使用自身类加载器加载，最后导致类型不匹配
+                             -->
+                            <imported>
+                                <packages>
+                                    <package>pres.lnk.sofa.demo.facade.*</package>
+                                </packages>
+                            </imported>
+                            <!--
+                             类隔离关键
+                             设置插件对外提供服务的类，让调用方使用插件自身的类加载器来加载类，以实现类隔离能力
+                             -->
+                            <exported>
+                                <packages>
+                                    <package>pres.lnk.sofa.demo.plugin.*</package>
+                                </packages>
+                            </exported>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
